@@ -1,0 +1,21 @@
+.add-todo-btn {
+    background-color: blue;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    border-radius: 8px;
+    border: solid black 3px;
+}
+
+.add-todo-input {
+    font-size: 12px;
+    border-radius: 8px;
+    border: solid black 3px;
+    text-align: center
+}
+
+.add-todo-conainer {
+    text-align: center;
+}
