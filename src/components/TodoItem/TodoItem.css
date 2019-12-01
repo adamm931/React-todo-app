@@ -17,6 +17,10 @@
     font-weight: bolder;
 }
 
+.todo-item-container {
+    display: inline-block;
+}
+
 .todo-item-comleted {
     text-decoration: line-through;
 }

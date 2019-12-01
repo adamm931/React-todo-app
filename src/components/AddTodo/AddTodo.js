@@ -42,7 +42,7 @@ class AddTodo extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    addTodo: text => dispatch(actions.addTodo(text))
+    addTodo: text => dispatch(actions.requestAddTodo(text))
 })
 
 export default connect(null, mapDispatchToProps)(AddTodo)

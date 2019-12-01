@@ -13,14 +13,16 @@ class TodoItem extends Component {
         }
 
         return <li>
-            <div className={css} >
-                {this.props.item.text}
-            </div>
-            <input
-                type="checkbox"
-                checked={this.props.item.completed}
-                onChange={this.props.toggleTodo}
-            />
+            <label className="todo-item-container pointer">
+                <div className={css} >
+                    {this.props.item.text}
+                </div>
+                <input
+                    type="checkbox"
+                    checked={this.props.item.completed}
+                    onChange={this.props.toggleTodo}
+                />
+            </label>
             <button
                 className="remove-todo-btn"
                 onClick={this.props.deleteTodo}>
@@ -34,8 +36,8 @@ const mapDispatchToProps = (dispatch, props) => {
     let id = props.item.id;
 
     return {
-        toggleTodo: () => dispatch(actions.toggleTodo(id)),
-        deleteTodo: () => dispatch(actions.deleteTodo(id))
+        toggleTodo: () => dispatch(actions.requestToggleTodo(id)),
+        deleteTodo: () => dispatch(actions.requestDeleteTodo(id))
     }
 }
 
