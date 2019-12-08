@@ -18,7 +18,7 @@ namespace Todo.Infrastructure.Extensions
                 options.UseNpgsql(configuration.GetConnectionString("Todos"));
             });
 
-            services.AddScoped<IDateTime, UtcDateTime>();
+            services.AddScoped<IDateTime, DateTimeProvider>();
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddScoped<IDatabaseCreator>(provider => provider.GetService<ApplicationDbContext>());
         }
