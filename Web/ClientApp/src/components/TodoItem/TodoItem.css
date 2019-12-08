@@ -1,0 +1,27 @@
+.remove-todo-btn {
+    background-color:red;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    border-radius: 8px;
+    border: solid black 3px;
+    justify-content: flex-end;
+}
+
+.todo-item {
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    padding-right: 5px;
+    font-weight: bolder;
+}
+
+.todo-item-container {
+    display: flex;
+}
+
+.todo-item-comleted {
+    text-decoration: line-through;
+}
