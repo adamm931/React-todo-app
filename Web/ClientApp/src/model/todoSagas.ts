@@ -1,12 +1,13 @@
-import { all, put, takeLatest, call } from 'redux-saga/effects'
+import { all, put, takeLatest, call, takeEvery } from 'redux-saga/effects'
 import * as actionCreators from '../actions/actionsFactory'
-import * as actionTypes from '../constants/actionTypes'
 import * as todoClient from '../service/todoClient'
-import * as filterTypes from '../constants/filterTypes'
+import { FilterType } from '../constants/filterTypes'
+import { ActionRequestTypes } from '../constants/actionTypes'
+import { AnyAction } from 'redux'
 
 function* listTodoAsync() {
     try {
-        let data = yield call(todoClient.list, filterTypes.All);
+        let data = yield call(todoClient.list, FilterType.All);
         yield put(actionCreators.listTodo(data));
     }
     catch (error) {
@@ -14,7 +15,7 @@ function* listTodoAsync() {
     }
 }
 
-function* addTodoAsync({ text }) {
+function* addTodoAsync({ text }: AnyAction) {
     try {
         yield call(todoClient.add, text);
         yield put(actionCreators.addTodo(text));
@@ -24,7 +25,7 @@ function* addTodoAsync({ text }) {
     }
 }
 
-function* toogleTodoAsync({ id }) {
+function* toogleTodoAsync({ id }: AnyAction) {
     try {
         yield call(todoClient.toggle, id);
         yield put(actionCreators.toggleTodo(id));
@@ -34,7 +35,7 @@ function* toogleTodoAsync({ id }) {
     }
 }
 
-function* deleteTodoAsync({ id }) {
+function* deleteTodoAsync({ id }: AnyAction) {
     try {
         yield call(todoClient.remove, id);
         yield put(actionCreators.deleteTodo(id));
@@ -45,28 +46,28 @@ function* deleteTodoAsync({ id }) {
     yield put(actionCreators.deleteTodo(id))
 }
 
-function* setTodoFilterAsync({ filter }) {
+function* setTodoFilterAsync({ filter }: AnyAction) {
     yield put(actionCreators.setFilter(filter))
 }
 
 function* watchAddTodoAsync() {
-    yield takeLatest(actionTypes.RequestAddTodo, addTodoAsync);
+    yield takeLatest(ActionRequestTypes.AddTodo, addTodoAsync);
 }
 
 function* watchToogleTodoAsync() {
-    yield takeLatest(actionTypes.RequestToggleTodo, toogleTodoAsync);
+    yield takeLatest(ActionRequestTypes.ToggleTodo, toogleTodoAsync);
 }
 
 function* watchDeleteTodoAsync() {
-    yield takeLatest(actionTypes.RequestDeleteTodo, deleteTodoAsync);
+    yield takeLatest(ActionRequestTypes.DeleteTodo, deleteTodoAsync);
 }
 
 function* watchSetTodoFilterAsync() {
-    yield takeLatest(actionTypes.RequestSetTodoFilter, setTodoFilterAsync);
+    yield takeLatest(ActionRequestTypes.SetTodoFilter, setTodoFilterAsync);
 }
 
 function* watchListTodoAsync() {
-    yield takeLatest(actionTypes.RequestListTodo, listTodoAsync);
+    yield takeLatest(ActionRequestTypes.ListTodo, listTodoAsync);
 }
 
 export function* watch() {

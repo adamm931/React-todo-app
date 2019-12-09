@@ -31,18 +31,8 @@ class TodoItems extends React.Component {
     }
 }
 
-const filterTodos = (type, todos) => {
-    if (type === filterTypes.Completed) {
-        return todos.filter(todo => todo.completed);
-    }
-    if (type === filterTypes.Uncompleted) {
-        return todos.filter(todo => !todo.completed);
-    }
-    return todos;
-}
-
 const mapStateToProps = state => ({
-    todos: filterTodos(state.filter, state.todos)
+    todos: state.getTodos()
 })
 
 const mapDispatchToProps = dispatch => ({

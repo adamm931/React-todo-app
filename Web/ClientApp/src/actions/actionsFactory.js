@@ -1,54 +1,54 @@
-import * as actionTypes from '../constants/actionTypes';
+import { ActionTypes, ActionRequestTypes } from '../constants/actionTypes';
 
 // sync
 export const listTodo = (todos) => ({
-    type: actionTypes.ListTodo,
+    type: ActionTypes.ListTodo,
     todos: todos
 })
 
 export const addTodo = name => ({
     id: Date.now(),
-    type: actionTypes.AddTodo,
+    type: ActionTypes.AddTodo,
     name,
 })
 
 export const toggleTodo = id => ({
     id,
-    type: actionTypes.ToggleTodo
+    type: ActionTypes.ToggleTodo
 })
 
 export const deleteTodo = id => ({
     id,
-    type: actionTypes.DeleteTodo
+    type: ActionTypes.DeleteTodo
 })
 
 export const setFilter = filterType => ({
     filter: filterType,
-    type: actionTypes.SetTodoFilter
+    type: ActionTypes.SetTodoFilter
 })
 
 // async
 export const requestListTodo = () => ({
-    type: actionTypes.RequestListTodo
+    type: ActionRequestTypes.ListTodo
 })
 
 export const requestAddTodo = text => ({
     id: Date.now(),
-    type: actionTypes.RequestAddTodo,
+    type: ActionRequestTypes.AddTodo,
     text,
 })
 
 export const requestToggleTodo = id => ({
     id,
-    type: actionTypes.RequestToggleTodo
+    type: ActionRequestTypes.ToggleTodo
 })
 
 export const requestDeleteTodo = id => ({
     id,
-    type: actionTypes.RequestDeleteTodo
+    type: ActionRequestTypes.DeleteTodo
 })
 
 export const requestSetFilter = filterType => ({
     filter: filterType,
-    type: actionTypes.RequestSetTodoFilter
+    type: ActionRequestTypes.SetTodoFilter
 })

@@ -1,39 +1,31 @@
 import React, { Component } from 'react';
-import { All, Completed, Uncompleted } from '../../constants/filterTypes'
+import { FilterType } from '../../constants/filterTypes'
 import { connect } from 'react-redux'
 import * as actions from '../../actions/actionsFactory'
+import SelectFilterType from './SelectFilterType'
 
 class SearchTodos extends Component {
 
     render() {
         return <div className="search-todos">
-            <label className="pointer">
-                <input
-                    type="radio"
-                    name="filterType"
-                    value={All}
-                    checked={this.props.filter === All}
-                    onChange={() => this.props.setFilter(All)} 
-                    /> All: 
-            </label>
-            <label className="pointer">
-                <input
-                    type="radio"
-                    name="filterType"
-                    value={Completed}
-                    checked={this.props.filter === Completed}
-                    onChange={() => this.props.setFilter(Completed)} 
-                    /> Completed: 
-            </label>
-            <label className="pointer">
-                <input
-                    type="radio"
-                    name="filterType"
-                    value={Uncompleted}
-                    checked={this.props.filter === Uncompleted}
-                    onChange={() => this.props.setFilter(Uncompleted)} 
-                    /> Uncompleted: 
-            </label>
+            <SelectFilterType
+                setFilter={this.props.setFilter} 
+                currentFilter={this.props.filter}
+                filter={FilterType.All}
+                label={'All'} 
+            />
+            <SelectFilterType
+                setFilter={this.props.setFilter} 
+                currentFilter={this.props.filter}
+                filter={FilterType.Completed}
+                label={'Completed'}  
+            />
+            <SelectFilterType
+                setFilter={this.props.setFilter} 
+                currentFilter={this.props.filter}
+                filter={FilterType.All}
+                label={'Uncompleted'}  
+            />
         </div>
     }
 }
