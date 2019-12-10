@@ -1,25 +1,31 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Todo.Application.Common.Interfaces;
+using Todo.Application.ViewModels;
 using Todo.Domain.Entities;
 
 namespace Todo.Application.Commands
 {
-    public class AddTodoCommand : IRequest
+    public class AddTodoCommand : IRequest<TodoItemVm>
     {
         public string Name { get; set; }
 
-        public class Handler : IRequestHandler<AddTodoCommand>
+        public class Handler : IRequestHandler<AddTodoCommand, TodoItemVm>
         {
             private readonly IApplicationDbContext _context;
+            private readonly IMapper _mapper;
 
-            public Handler(IApplicationDbContext context)
+            public Handler(
+                IApplicationDbContext context,
+                IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
-            public async Task<Unit> Handle(AddTodoCommand request, CancellationToken cancellationToken)
+            public async Task<TodoItemVm> Handle(AddTodoCommand request, CancellationToken cancellationToken)
             {
                 var todoItem = TodoItem.Create(request.Name);
 
@@ -27,7 +33,7 @@ namespace Todo.Application.Commands
 
                 await _context.SaveAsync();
 
-                return Unit.Value;
+                return _mapper.Map<TodoItemVm>(todoItem);
             }
         }
     }

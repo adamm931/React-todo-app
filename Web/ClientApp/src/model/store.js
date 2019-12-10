@@ -1,15 +1,19 @@
 import { createStore, applyMiddleware } from 'redux'
 import { todoHandler } from '../reducers/todoHandler'
 import createSagaMiddleware from 'redux-saga'
-import * as todoSaga from '../model/todoSagas'
+import * as TodoSagas from './TodoSagas'
+import { ActionCreator } from '../actions/ActionCreator'
 
 //create saga
-const saga = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware();
 
 // create store and bind saga
-const store = createStore(todoHandler, applyMiddleware(saga));
+const store = createStore(todoHandler, applyMiddleware(sagaMiddleware));
 
 // run saga
-saga.run(todoSaga.watch);
+sagaMiddleware.run(TodoSagas.Watch);
+
+// request list of todos
+store.dispatch(ActionCreator.RequestListTodo())
 
 export default store

@@ -1,6 +1,6 @@
 # Build note app
 # Get node base image
-FROM node:12.2.0-alpine
+FROM node:12.2.0-alpine 
 WORKDIR /app/ClientApp
 
 #Copy package.json

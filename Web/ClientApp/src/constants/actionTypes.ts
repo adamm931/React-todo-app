@@ -7,8 +7,8 @@ export enum ActionTypes {
 }
 
 export enum ActionRequestTypes {
-    AddTodo = 'ADD_TODO',
     ListTodo = 'LIST_TODOS',
+    AddTodo = 'ADD_TODO',
     ToggleTodo = 'TOGGLE_TODO',
     DeleteTodo = 'DELETE_TODO',
     SetTodoFilter = 'SET_TODO_FILTER'

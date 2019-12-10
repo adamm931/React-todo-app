@@ -12,10 +12,7 @@ namespace Todo.Api.Controllers
     {
         private readonly IMediator _mediator;
 
-        public TodosController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        public TodosController(IMediator mediator) => _mediator = mediator;
 
         [HttpPost]
         [Route("filter")]

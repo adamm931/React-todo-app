@@ -2,62 +2,46 @@ import * as urls from "../constants/urls";
 import axios from 'axios';
 import { FilterType } from "../constants/filterTypes";
 import { Guid } from "guid-typescript";
+import { ITodoClient } from "./ITodoClient";
+import { HttpMethod } from "../model/HttpMethod";
+import { TodoRequestBody } from "../model/TodoRequestBody";
 
-export const list = (filterType : FilterType) => request(HttpMethod.POST, urls.Fitler, TodoRequestBody.FromFilterType(filterType))
+export class TodoClient implements ITodoClient {
 
-export const add = (name: string) => request(HttpMethod.POST, undefined, TodoRequestBody.FromName(name))
+    ListAsync = async (filterType: FilterType): Promise<any> => 
+        await this.request(HttpMethod.Post, urls.Fitler, TodoRequestBody.FromFilterType(filterType))
+    
+    AddAsync = async (name: string): Promise<any> => 
+        await this.request(HttpMethod.Post, undefined, TodoRequestBody.FromName(name))
 
-export const toggle = (id: Guid) => request(HttpMethod.POST, urls.Toggle, TodoRequestBody.FromId(id))
+    ToogleAsync = async (id: Guid): Promise<any> => 
+        await this.request(HttpMethod.Post, urls.Toggle, TodoRequestBody.FromId(id))
 
-export const remove = (id: Guid) => request(HttpMethod.DELETE, undefined, TodoRequestBody.FromId(id))
+    DeleteAsync = async (id: Guid): Promise<any> =>
+        await this.request(HttpMethod.Delete, undefined, TodoRequestBody.FromId(id))
 
-const request = (method: HttpMethod, url: string | undefined = '', data: TodoRequestBody) => createClient()
-    .request({
-        data: data,
-        url: url,
-        method: HttpMethod.DELETE
-    })
-    .then(response => response.data)
-    .catch(error => {
-        console.log(error)
-        return [];
-    })
+    static Instance = (): ITodoClient => new TodoClient()
 
-const createClient = () => axios.create({
-    baseURL: urls.Api,
-    headers: {
+    async request(method: HttpMethod, url: string | undefined = '', data: TodoRequestBody) { 
+        try {
+            const response = await this.createClient()
+                .request({
+                    data: data,
+                    url: url,
+                    method: method
+                });
+            return response.data;
+        }
+        catch (error) {
+            console.log(error);
+            return [];
+        }
+    }
+
+    createClient = () => axios.create({
+        baseURL: urls.Api,
+        headers: {
         'Content-Type': 'application/json'
-    }
-})
-
-enum HttpMethod {
-    POST = "post",
-    DELETE = "delete",
-}
-
-class TodoRequestBody {
-    FilterType?: FilterType;
-    Name?: string;
-    Id?: Guid;
-
-    static FromName = (name: string) => {
-        return <TodoRequestBody>
-        {
-            Name: name
         }
-    }
-
-    static FromId = (id: Guid) => {
-        return <TodoRequestBody>
-        {
-            Id: id
-        }
-    }
-
-    static FromFilterType = (filterType: FilterType) => {
-        return <TodoRequestBody>
-        {
-            FilterType: filterType
-        }
-    }
+    })
 }

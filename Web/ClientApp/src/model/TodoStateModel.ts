@@ -1,30 +1,29 @@
-import TodoItem from './todoItem';
 import { Guid } from 'guid-typescript';
 import { FilterType } from '../constants/filterTypes';
+import TodoItemModel from './TodoItemModel';
 
 export default class TodoState {
-    Todos: TodoItem[];
+    Todos: TodoItemModel[];
     CurrentFilter: FilterType;
+
+    static Empty = new TodoState([]);
     
-    constructor(todos: TodoItem[]) {
+    constructor(todos: TodoItemModel[]) {
         this.Todos = todos;
         this.CurrentFilter = FilterType.All;
     }
 
-    removeTodo = (id: Guid) => <TodoState> {
+    DeleteTodo = (id: Guid) => <TodoState> {
         ...this,
         Todos: this.Todos.filter(todo => todo.Id !== id)
     }
 
-    addTodo = (id: Guid, name: string) => <TodoState>{ 
+    AddTodo = (todo: TodoItemModel) => <TodoState>{ 
         ...this,
-        Todos: [
-            ...this.Todos, 
-            new TodoItem(id, name)
-        ] 
+        Todos: [...this.Todos, todo] 
     };
 
-    toggleTodo = (id: Guid) => {
+    ToggleTodo = (id: Guid) => {
 
         var todoToToggle = this.Todos.find(todo => todo.Id === id);
 
@@ -32,7 +31,7 @@ export default class TodoState {
             return this;
         }
 
-        todoToToggle.toogle();
+        todoToToggle.Toogle();
 
         return <TodoState>{
              ...this,
@@ -40,12 +39,12 @@ export default class TodoState {
         };
     }
 
-    setFilter = (filterType: FilterType) => <TodoState>{
+    SetFilter = (filterType: FilterType) => <TodoState>{
         ...this,
         CurrentFilter: filterType
     }
 
-    getTodos = () => {
+    GetTodos = () => {
         switch  (this.CurrentFilter)
         {
             case FilterType.Completed: {

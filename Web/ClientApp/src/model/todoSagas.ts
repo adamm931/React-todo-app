@@ -1,14 +1,17 @@
 import { all, put, takeLatest, call, takeEvery } from 'redux-saga/effects'
-import * as actionCreators from '../actions/actionsFactory'
-import * as todoClient from '../service/todoClient'
+import { TodoClient } from '../service/TodoClient'
 import { FilterType } from '../constants/filterTypes'
 import { ActionRequestTypes } from '../constants/actionTypes'
 import { AnyAction } from 'redux'
+import { ActionCreator } from '../actions/ActionCreator';
+import TodoItemModel from './TodoItemModel'
+
+const todoClient = TodoClient.Instance();
 
 function* listTodoAsync() {
     try {
-        let data = yield call(todoClient.list, FilterType.All);
-        yield put(actionCreators.listTodo(data));
+        let data = yield call(todoClient.ListAsync, FilterType.All);
+        yield put(ActionCreator.ListTodo(data));
     }
     catch (error) {
         throw error;
@@ -17,8 +20,9 @@ function* listTodoAsync() {
 
 function* addTodoAsync({ text }: AnyAction) {
     try {
-        yield call(todoClient.add, text);
-        yield put(actionCreators.addTodo(text));
+        var item = yield call(todoClient.AddAsync, text);
+        var todo = TodoItemModel.FromApiModel(item);
+        yield put(ActionCreator.AddTodo(todo));
     }
     catch (error) {
         throw error;
@@ -27,8 +31,8 @@ function* addTodoAsync({ text }: AnyAction) {
 
 function* toogleTodoAsync({ id }: AnyAction) {
     try {
-        yield call(todoClient.toggle, id);
-        yield put(actionCreators.toggleTodo(id));
+        yield call(todoClient.ToogleAsync, id);
+        yield put(ActionCreator.ToggleTodo(id));
     }
     catch (error) {
         throw error;
@@ -37,17 +41,16 @@ function* toogleTodoAsync({ id }: AnyAction) {
 
 function* deleteTodoAsync({ id }: AnyAction) {
     try {
-        yield call(todoClient.remove, id);
-        yield put(actionCreators.deleteTodo(id));
+        yield call(todoClient.DeleteAsync, id);
+        yield put(ActionCreator.DeleteTodo(id));
     }
     catch (error) {
         throw error;
     }
-    yield put(actionCreators.deleteTodo(id))
 }
 
 function* setTodoFilterAsync({ filter }: AnyAction) {
-    yield put(actionCreators.setFilter(filter))
+    yield put(ActionCreator.SetFilter(filter))
 }
 
 function* watchAddTodoAsync() {
@@ -70,7 +73,7 @@ function* watchListTodoAsync() {
     yield takeLatest(ActionRequestTypes.ListTodo, listTodoAsync);
 }
 
-export function* watch() {
+export function* Watch() {
     yield all([
         watchListTodoAsync(),
         watchAddTodoAsync(),
@@ -78,4 +81,4 @@ export function* watch() {
         watchDeleteTodoAsync(),
         watchSetTodoFilterAsync()
     ])
-} 
+}
