@@ -16,8 +16,4 @@ export default class TodoItemModel {
         apiModel.name,
         apiModel.completed
     )
-
-    Toogle = () => {
-        this.Completed = !this.Completed;
-    } 
 }

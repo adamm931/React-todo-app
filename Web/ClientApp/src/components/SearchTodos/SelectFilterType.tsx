@@ -1,12 +1,12 @@
-import React, { FunctionComponent } from 'react'
+import React from 'react'
 import { ISelectFilterTypeProps } from './States/ISelectFilterTypeProps'
-import TodoState from '../../model/TodoStateModel'
 import { ISelectFilterTypeDispatch } from './States/ISelectFilterTypeDispatch'
 import { ActionCreator } from '../../actions/ActionCreator'
 import { connect } from 'react-redux'
 import { FilterType } from '../../constants/filterTypes'
+import { ITodoState } from '../../model/ITodoState'
 
-const SelectFilterType: FunctionComponent<ISelectFilterTypeProps & ISelectFilterTypeDispatch> = (props) => {
+const SelectFilterType: React.FC<ISelectFilterTypeProps & ISelectFilterTypeDispatch> = (props) => {
     return (
         <label className="pointer">
             <input
@@ -20,7 +20,7 @@ const SelectFilterType: FunctionComponent<ISelectFilterTypeProps & ISelectFilter
     )
 }
 
-const mapStateToProps = (state: TodoState, ownProps: ISelectFilterTypeProps): ISelectFilterTypeProps => ({
+const mapStateToProps = (state: ITodoState, ownProps: ISelectFilterTypeProps): ISelectFilterTypeProps => ({
     Checked: ownProps.FilterType === state.CurrentFilter,
     FilterType: ownProps.FilterType,
 })
@@ -29,7 +29,7 @@ const mapDispatchToProps = (dispatch: any, ownProps: ISelectFilterTypeProps): IS
     SetFilter: () => dispatch(ActionCreator.RequestSetFilter(ownProps.FilterType))
 })
 
-export default connect<ISelectFilterTypeProps, ISelectFilterTypeDispatch, ISelectFilterTypeProps, TodoState>(
+export default connect<ISelectFilterTypeProps, ISelectFilterTypeDispatch, ISelectFilterTypeProps, ITodoState>(
     mapStateToProps,
     mapDispatchToProps
 )(SelectFilterType);

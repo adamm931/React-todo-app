@@ -6,23 +6,20 @@ export class TodoRequestBody {
     Name?: string;
     Id?: Guid;
 
-    static FromName = (name: string) => {
-        return <TodoRequestBody>
-        {
+    static FromName = (name: string): TodoRequestBody => {
+        return {
             Name: name
         }
     }
 
-    static FromId = (id: Guid) => {
-        return <TodoRequestBody>
-        {
+    static FromId = (id: Guid): TodoRequestBody => {
+        return {
             Id: id
         }
     }
 
-    static FromFilterType = (filterType: FilterType) => {
-        return <TodoRequestBody>
-        {
+    static FromFilterType = (filterType: FilterType): TodoRequestBody => {
+        return  {
             FilterType: filterType
         }
     }

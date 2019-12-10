@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './TodoItem.css';
 import { connect } from 'react-redux'
 import { ITodoItemProps } from './States/ITodoItemProps'
@@ -7,31 +7,35 @@ import { ActionCreator } from "../../actions/ActionCreator";
 
 type ITodoItemComponentProps = ITodoItemProps & ITodoItemDispatch
 
-const TodoItem: React.FunctionComponent<ITodoItemComponentProps> = ({TodoItem, ToggleTodo, DeleteTodo}) => {
+class TodoItem extends React.Component<ITodoItemComponentProps> {
+    render() {
 
-    let css = "todo-item";
+        console.log('TodoItem - com', this.props)
 
-    if (TodoItem.Completed) {
-        css += " todo-item-comleted";
+        let css = "todo-item";
+
+        if (this.props.TodoItem.Completed) {
+            css += " todo-item-comleted";
+        }
+
+        return (<li>
+            <label className="todo-item-container pointer">
+                <div className={css} >
+                    {this.props.TodoItem.Name}
+                </div>
+                <input
+                    type="checkbox"
+                    checked={this.props.TodoItem.Completed}
+                    onChange={this.props.ToggleTodo}
+                />
+            </label>
+            <button
+                className="remove-todo-btn"
+                onClick={this.props.DeleteTodo}>
+                Delete
+            </button>
+        </li>) 
     }
-    
-    return (<li>
-        <label className="todo-item-container pointer">
-            <div className={css} >
-                {TodoItem.Name}
-            </div>
-            <input
-                type="checkbox"
-                checked={TodoItem.Completed}
-                onChange={ToggleTodo}
-            />
-        </label>
-        <button
-            className="remove-todo-btn"
-            onClick={DeleteTodo}>
-            Delete
-        </button>
-    </li>)
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: ITodoItemProps): ITodoItemDispatch => ({

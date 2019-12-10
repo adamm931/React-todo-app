@@ -1,4 +1,4 @@
-import { all, put, takeLatest, call, takeEvery } from 'redux-saga/effects'
+import { all, put, takeLatest, call } from 'redux-saga/effects'
 import { TodoClient } from '../service/TodoClient'
 import { FilterType } from '../constants/filterTypes'
 import { ActionRequestTypes } from '../constants/actionTypes'

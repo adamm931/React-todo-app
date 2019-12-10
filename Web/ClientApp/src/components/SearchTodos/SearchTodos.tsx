@@ -1,8 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import { FilterType } from '../../constants/filterTypes'
 import SelectFilterType from './SelectFilterType';
 
-const SearchTodos: FunctionComponent<{}> = () => {
+const SearchTodos: React.FC = () => {
     return (
         <div className="search-todos">
             <SelectFilterType 

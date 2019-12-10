@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux'
-import { todoHandler } from '../reducers/todoHandler'
+import TodoReducer from "../reducers/TodoReducer";
 import createSagaMiddleware from 'redux-saga'
 import * as TodoSagas from './TodoSagas'
 import { ActionCreator } from '../actions/ActionCreator'
@@ -8,7 +8,7 @@ import { ActionCreator } from '../actions/ActionCreator'
 const sagaMiddleware = createSagaMiddleware();
 
 // create store and bind saga
-const store = createStore(todoHandler, applyMiddleware(sagaMiddleware));
+const store = createStore(TodoReducer, applyMiddleware(sagaMiddleware));
 
 // run saga
 sagaMiddleware.run(TodoSagas.Watch);
