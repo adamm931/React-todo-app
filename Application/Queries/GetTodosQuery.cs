@@ -29,7 +29,10 @@ namespace Todo.Application.Queries
 
             public async Task<IEnumerable<TodoItemVm>> Handle(FilterTodosRequest request, CancellationToken cancellationToken)
             {
-                var items = await GetItemsByFilter(request.FilterType).ToListAsync();
+                var items = await GetItemsByFilter(request.FilterType)
+                    .OrderByDescending(todo => todo.CreatedOn)
+                    .ToListAsync();
+
                 var itemsVm = _mapper.Map<IEnumerable<TodoItemVm>>(items);
 
                 return itemsVm;

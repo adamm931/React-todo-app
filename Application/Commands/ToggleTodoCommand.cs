@@ -1,15 +1,12 @@
 ﻿using MediatR;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Todo.Application.Common.Interfaces;
 
 namespace Todo.Application.Commands
 {
-    public class ToggleTodoCommand : IRequest
+    public class ToggleTodoCommand : BaseTodoCommand
     {
-        public Guid Id { get; set; }
-
         public class Handler : IRequestHandler<ToggleTodoCommand>
         {
             private readonly IApplicationDbContext _context;
