@@ -1,15 +1,23 @@
 import { connect } from 'react-redux';
 import './TodoItems.css';
 import { ITodoItemsProps } from './States/ITodoItemsProps';
-import React from 'react';
+import React, { Dispatch } from 'react';
 import SearchTodos from '../SearchTodos/SearchTodos';
 import AddTodo from '../AddTodo/AddTodo';
 import TodoItem from '../TodoItem/TodoItem';
-import { ITodoState } from '../../model/ITodoState';
-import TodoItemModel from '../../model/TodoItemModel';
+import { ITodoState } from '../../state/ITodoState';
+import TodoItemModel from '../../models/TodoItemModel';
 import { FilterType } from '../../constants/filterTypes';
+import { ITodoItemsDispatch } from './States/ITodoItemsDispatch';
+import { IListTodosRequest } from '../../actions/request/IListTodosRequest';
+import { RequestCreator } from '../../actions/creator/RequestCreator';
 
-class TodoItems extends React.Component<ITodoItemsProps> {
+class TodoItems extends React.Component<ITodoItemsProps & ITodoItemsDispatch> {
+    
+    componentDidMount() {
+        this.props.ListTodosRequest();
+    }
+
     render() {
         return (
             <div className="todo-list">
@@ -36,6 +44,12 @@ const mapStateToProps = (state: ITodoState): ITodoItemsProps => {
     }
 }
 
+const mapStateToDispatch = (dispatch: Dispatch<IListTodosRequest>): ITodoItemsDispatch => {
+    return {
+        ListTodosRequest: () => dispatch(RequestCreator.ListTodos()),
+    }
+}
+
 const filterTodos = (state: ITodoState): TodoItemModel[] => {
     switch (state.CurrentFilter)
         {
@@ -53,6 +67,7 @@ const filterTodos = (state: ITodoState): TodoItemModel[] => {
         }
 }
 
-export default connect<ITodoItemsProps, {}, {}, ITodoState>(
-    mapStateToProps
+export default connect<ITodoItemsProps, ITodoItemsDispatch, {}, ITodoState>(
+    mapStateToProps,
+    mapStateToDispatch
 )(TodoItems)

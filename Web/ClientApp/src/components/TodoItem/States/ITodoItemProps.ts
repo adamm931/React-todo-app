@@ -1,4 +1,4 @@
-import TodoItemModel from "../../../model/TodoItemModel";
+import TodoItemModel from "../../../models/TodoItemModel";
 
 export interface ITodoItemProps {
     TodoItem: TodoItemModel

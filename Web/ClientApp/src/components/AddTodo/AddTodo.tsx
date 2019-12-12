@@ -2,8 +2,8 @@ import React from 'react';
 import './AddTodo.css'
 import { connect } from 'react-redux'
 import { IAddTodoDispatch } from './States/IAddTodoDispatch';
-import { ActionCreator } from '../../actions/ActionCreator';
 import { IAddTodoState } from './States/IAddTodoState';
+import { RequestCreator } from '../../actions/creator/RequestCreator';
 
 class AddTodo extends React.Component<IAddTodoDispatch, IAddTodoState> {
     constructor(props: any) {
@@ -58,7 +58,7 @@ class AddTodo extends React.Component<IAddTodoDispatch, IAddTodoState> {
 }
 
 const mapDispatchToProps = (dispatch: any):IAddTodoDispatch => ({
-    AddTodo: (text: string) => dispatch(ActionCreator.RequestAddTodo(text))
+    AddTodo: (name: string) => dispatch(RequestCreator.AddTodo(name))
 })
 
 export default connect(null, mapDispatchToProps)(AddTodo)

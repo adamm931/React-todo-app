@@ -3,7 +3,7 @@ import './TodoItem.css';
 import { connect } from 'react-redux'
 import { ITodoItemProps } from './States/ITodoItemProps'
 import { ITodoItemDispatch } from './States/ITodoItemDispatch';
-import { ActionCreator } from "../../actions/ActionCreator";
+import { RequestCreator } from '../../actions/creator/RequestCreator';
 
 type ITodoItemComponentProps = ITodoItemProps & ITodoItemDispatch
 
@@ -39,8 +39,8 @@ class TodoItem extends React.Component<ITodoItemComponentProps> {
 }
 
 const mapDispatchToProps = (dispatch: any, ownProps: ITodoItemProps): ITodoItemDispatch => ({
-    ToggleTodo: () => dispatch(ActionCreator.RequestToggleTodo(ownProps.TodoItem.Id)),
-    DeleteTodo: () => dispatch(ActionCreator.RequestDeleteTodo(ownProps.TodoItem.Id))
+    ToggleTodo: () => dispatch(RequestCreator.ToggleTodo(ownProps.TodoItem.Id)),
+    DeleteTodo: () => dispatch(RequestCreator.DeleteTodo(ownProps.TodoItem.Id))
 })
 
 export default connect(null, mapDispatchToProps)(TodoItem)

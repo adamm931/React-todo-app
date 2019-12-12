@@ -1,4 +1,4 @@
-import TodoItemModel from "./TodoItemModel";
+import TodoItemModel from "../models/TodoItemModel";
 import { FilterType } from "../constants/filterTypes";
 
 export interface ITodoState {

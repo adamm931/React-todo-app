@@ -3,8 +3,8 @@ import axios from 'axios';
 import { FilterType } from "../constants/filterTypes";
 import { Guid } from "guid-typescript";
 import { ITodoClient } from "./ITodoClient";
-import { HttpMethod } from "../model/HttpMethod";
-import { TodoRequestBody } from "../model/TodoRequestBody";
+import { HttpMethod } from "../models/HttpMethod";
+import { TodoRequestBody } from "../models/TodoRequestBody";
 
 export class TodoClient implements ITodoClient {
 

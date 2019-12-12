@@ -1,50 +1,30 @@
-import { ActionTypes} from '../constants/actionTypes'
-import { AnyAction } from 'redux'
-import TodoItemModel from '../model/TodoItemModel'
+import TodoItemModel from '../models/TodoItemModel'
 import { FilterType } from '../constants/filterTypes'
-import { ITodoState } from '../model/ITodoState'
+import { ITodoState } from '../state/ITodoState'
+import { IActions, ActionsTypes } from '../actions/enums/ActionTypes'
+import { TodoStateManger } from '../state/TodoStateManager'
 
 const initialState: ITodoState = {
     Todos: [],
     CurrentFilter: FilterType.All
 }
 
-const TodoReducer = (state: ITodoState = initialState, action: AnyAction): ITodoState => {
+const TodoReducer = (state: ITodoState = initialState, action: IActions): ITodoState => {
+
+    var stateManager = TodoStateManger.Create(state);
+
     switch (action.type) {
-        case ActionTypes.AddTodo:
-            return {
-                ...state,
-                Todos: [...state.Todos, action.todo] 
-            }
-        case ActionTypes.ToggleTodo:
-            return {
-                ...state,
-                Todos: state.Todos.map(todo => {
-                    if (todo.Id === action.id){
-                        return {
-                            ...todo,
-                            Completed: !todo.Completed
-                        }
-                    }
-                    return todo;
-                })
-            }
-        case ActionTypes.DeleteTodo:
-            return {
-                ...state,
-                Todos: state.Todos.filter(todo => todo.Id !== action.id)
-            }
-        case ActionTypes.SetTodoFilter:
-            return {
-                ...state,
-                CurrentFilter: action.filter
-            }
-        case ActionTypes.ListTodo:
-            return {
-                ...state,
-                Todos: action.todos.map((todo: any) => TodoItemModel.FromApiModel(todo)),
-                CurrentFilter: FilterType.All
-            }
+        case ActionsTypes.ADD_TODO:
+            return stateManager.AddTodo(action.Todo)
+        case ActionsTypes.TOGGLE_TODO:
+            return stateManager.ToogleTodo(action.Id)
+        case ActionsTypes.DELETE_TODO:
+            return stateManager.DeleteTodo(action.Id)
+        case ActionsTypes.SET_FILTER:
+            return stateManager.SetFilter(action.FilterType)
+        case ActionsTypes.SET_TODOS:
+            var todos = action.Todos.map((todo: any) => TodoItemModel.FromApiModel(todo))
+            return stateManager.SetTodos(todos)
         default:
             return state;
     }

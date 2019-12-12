@@ -1,10 +1,10 @@
 import React from 'react'
 import { ISelectFilterTypeProps } from './States/ISelectFilterTypeProps'
 import { ISelectFilterTypeDispatch } from './States/ISelectFilterTypeDispatch'
-import { ActionCreator } from '../../actions/ActionCreator'
 import { connect } from 'react-redux'
 import { FilterType } from '../../constants/filterTypes'
-import { ITodoState } from '../../model/ITodoState'
+import { ITodoState } from '../../state/ITodoState'
+import { RequestCreator } from '../../actions/creator/RequestCreator'
 
 const SelectFilterType: React.FC<ISelectFilterTypeProps & ISelectFilterTypeDispatch> = (props) => {
     return (
@@ -26,7 +26,7 @@ const mapStateToProps = (state: ITodoState, ownProps: ISelectFilterTypeProps): I
 })
 
 const mapDispatchToProps = (dispatch: any, ownProps: ISelectFilterTypeProps): ISelectFilterTypeDispatch => ({
-    SetFilter: () => dispatch(ActionCreator.RequestSetFilter(ownProps.FilterType))
+    SetFilter: () => dispatch(RequestCreator.SetFilter(ownProps.FilterType))
 })
 
 export default connect<ISelectFilterTypeProps, ISelectFilterTypeDispatch, ISelectFilterTypeProps, ITodoState>(
