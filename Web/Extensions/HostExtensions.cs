@@ -4,7 +4,7 @@ using Todo.Infrastructure.Seed;
 
 namespace Todo.Api.Extensions
 {
-    public static class HostSetup
+    public static class HostExtensions
     {
         public static IHost Setup(this IHost host)
         {

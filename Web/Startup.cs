@@ -10,15 +10,16 @@ using Newtonsoft.Json.Converters;
 using Todo.Application.Commands.Validators;
 using Todo.Application.Extensions;
 using Todo.Infrastructure.Extensions;
+using Todo.Web.Extensions;
 using Todo.Web.Middlewares;
 
 namespace Todo.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostEnvironment enviroment)
         {
-            Configuration = configuration;
+            Configuration = enviroment.BuildConfiguration();
         }
 
         public IConfiguration Configuration { get; }
@@ -33,6 +34,7 @@ namespace Todo.Api
 
             services.AddApplication();
             services.AddInfrastructure(Configuration);
+
 
             services
                 .AddMvc()

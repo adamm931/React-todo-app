@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using Todo.Application.Common.Resources;
-using Todo.Common;
 
 namespace Todo.Application.Commands.Validators
 {
@@ -16,7 +15,7 @@ namespace Todo.Application.Commands.Validators
 
             RuleFor(model => model.Name)
                 .MaximumLength(MaxLenght)
-                .WithMessage(ValidationMessages.TodoNameMustBeMaximumLenghtOf.Format(MaxLenght));
+                .WithMessage(string.Format(ValidationMessages.TodoNameMustBeMaximumLenghtOf, MaxLenght));
         }
     }
 }

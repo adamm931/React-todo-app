@@ -1,0 +1,18 @@
+version: '3.7'
+services:
+    web:
+        # image: todo-app
+        build: .
+        ports:
+            - "5000:80"
+        depends_on:
+            - "postgres"
+        environment: 
+            - "ConnectionStrings__Todos=Server=192.168.99.100;Database=TodosDb;Username=postgres;Password=09051993"
+    postgres:
+        image: postgres
+        ports:
+            - "5432:5432"
+        environment:
+            - "POSTGRES_PASSWORD=09051993"
+         

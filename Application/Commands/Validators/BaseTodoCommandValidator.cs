@@ -2,7 +2,6 @@
 using System.Linq;
 using Todo.Application.Common.Interfaces;
 using Todo.Application.Common.Resources;
-using Todo.Common;
 
 namespace Todo.Application.Commands.Validators
 {
@@ -24,7 +23,7 @@ namespace Todo.Application.Commands.Validators
 
             RuleFor(model => model.Id)
                 .Must(id => _context.Todos.Any(todo => todo.Id == id))
-                .WithMessage(id => ValidationMessages.TodoNotFound.Format(id));
+                .WithMessage(id => string.Format(ValidationMessages.TodoNotFound, id));
         }
     }
 }
