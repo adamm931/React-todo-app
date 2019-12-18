@@ -9,6 +9,6 @@ namespace Todo.Domain.Common
     {
         All,
         Completed,
-        Uncompeted
+        Uncompleted
     }
 }

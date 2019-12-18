@@ -1,6 +1,7 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,25 +21,21 @@ namespace Todo.Api
         public Startup(IHostEnvironment enviroment)
         {
             Configuration = enviroment.BuildConfiguration();
+            Environment = enviroment;
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        public IHostEnvironment Environment { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.Converters.Add(new StringEnumConverter());
-            });
-
+            services.AddControllers();
             services.AddApplication();
             services.AddInfrastructure(Configuration);
 
-
-            services
-                .AddMvc()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddTodoCommandValidator>());
+            services.ConfigureSwagger(Configuration);
+            services.ConfigureMvc();
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -46,7 +43,6 @@ namespace Todo.Api
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(
             IApplicationBuilder app,
             IWebHostEnvironment env,
@@ -57,12 +53,10 @@ namespace Todo.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.InstallSwagger(Configuration);
             app.UseTodoExceptionMiddleware();
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -70,20 +64,7 @@ namespace Todo.Api
                 endpoints.MapControllers();
             });
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action}/");
-            });
-
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
-                spa.UseReactDevelopmentServer(npmScript: "start");
-            });
+            app.InstallSpa();
 
             loggerFactory.AddFile("Logs/TodoApp-{Date}.txt");
         }

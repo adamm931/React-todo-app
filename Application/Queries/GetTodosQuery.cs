@@ -45,7 +45,7 @@ namespace Todo.Application.Queries
                 return filterType switch
                 {
                     FilterType.Completed => todos.Where(todo => todo.Completed),
-                    FilterType.Uncompeted => todos.Where(todo => !todo.Completed),
+                    FilterType.Uncompleted => todos.Where(todo => !todo.Completed),
                     FilterType.All => todos,
                     _ => todos,
                 };
