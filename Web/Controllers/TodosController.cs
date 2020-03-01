@@ -21,23 +21,23 @@ namespace Todo.Api.Controllers
 
         [HttpPost]
         [Route("filter")]
-        [SwaggerReponseTypeAttribute(typeof(IEnumerable<TodoItemVm>))]
+        [SwaggerReponseType(typeof(IEnumerable<TodoItemVm>))]
         public async Task<IActionResult> Filter(FilterTodosRequest request)
             => Ok((await _mediator.Send(request)));
 
         [HttpPost]
-        [SwaggerReponseTypeAttribute(typeof(TodoItemVm))]
+        [SwaggerReponseType(typeof(TodoItemVm))]
         public async Task<IActionResult> Add(AddTodoCommand command)
             => Ok((await _mediator.Send(command)));
 
         [HttpPost]
         [Route("toggle")]
-        [SwaggerReponseTypeAttribute]
+        [SwaggerReponseType]
         public async Task<IActionResult> Toggle(ToggleTodoCommand command)
             => Ok((await _mediator.Send(command)));
 
         [HttpDelete]
-        [SwaggerReponseTypeAttribute]
+        [SwaggerReponseType]
         public async Task<IActionResult> Delete(DeleteTodoCommand command)
             => Ok((await _mediator.Send(command)));
     }
