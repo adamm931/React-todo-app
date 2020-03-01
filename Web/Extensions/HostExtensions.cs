@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Todo.Infrastructure.Seed;
 
@@ -6,7 +7,7 @@ namespace Todo.Api.Extensions
 {
     public static class HostExtensions
     {
-        public static IHost Setup(this IHost host)
+        public static IHost SeedData(this IHost host)
         {
             using var scope = host.Services.CreateScope();
 

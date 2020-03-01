@@ -36,11 +36,6 @@ namespace Todo.Api
 
             services.ConfigureSwagger(Configuration);
             services.ConfigureMvc();
-
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/build";
-            });
         }
 
         public void Configure(
@@ -55,16 +50,18 @@ namespace Todo.Api
 
             app.InstallSwagger(Configuration);
             app.UseTodoExceptionMiddleware();
-            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            app.InstallSpa();
 
             loggerFactory.AddFile("Logs/TodoApp-{Date}.txt");
         }

@@ -1,18 +1,27 @@
 version: '3.7'
 services:
-    web:
-        # image: todo-app
-        build: .
+    client:
+        build:
+            context: ./Web/ClientApp/
+            dockerfile: Client.Dockerfile
         ports:
-            - "5000:80"
+            - "3000:3000"
         depends_on:
-            - "postgres"
+            - "api"
+    api:
+        build:
+            context: .
+            dockerfile: Api.Dockerfile
+        ports:
+            - "8080:80"
+        depends_on:
+            - "db"
         environment: 
-            - "ConnectionStrings__Todos=Server=192.168.99.100;Database=TodosDb;Username=postgres;Password=09051993"
-    postgres:
+            - "ConnectionStrings__Todos=Server=172.18.0.2;Database=TodosDb;Username=postgres;Password=0905"
+    db:
         image: postgres
         ports:
             - "5432:5432"
         environment:
-            - "POSTGRES_PASSWORD=09051993"
+            - "POSTGRES_PASSWORD=0905"
          

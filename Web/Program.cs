@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Todo.Api.Extensions;
@@ -10,7 +11,7 @@ namespace Todo.Api
         {
             CreateHostBuilder(args)
                 .Build()
-                .Setup()
+                .SeedData()
                 .Run();
         }
 

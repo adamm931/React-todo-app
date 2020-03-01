@@ -21,16 +21,5 @@ namespace Todo.Web.Extensions
             });
         }
 
-        public static void InstallSpa(this IApplicationBuilder application)
-        {
-            application.UseStaticFiles();
-            application.UseSpaStaticFiles();
-            application.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "Clientapp";
-                spa.UseReactDevelopmentServer(npmScript: "start");
-            });
-        }
-
     }
 }

@@ -1,5 +1,4 @@
-export const Api = 'api/todos';
+export const Api = process.env.REACT_APP_API_ADDRESS;
+
 export const Fitler = 'filter';
 export const Toggle = 'toggle';
-
-
